@@ -15,15 +15,16 @@ import { Message, Provider as TranslationProvider, withTranslations } from 'retr
 
 import SomeComponent from './someComponent';
 import { getLanguage } from './config'; // some functionality to select a language, in this example, hopefully returning en or et.
+import { version } from '../../package.json';
 
 const translations = {
   en: {
-    'main.heading': 'retranslate',
+    'main.heading': 'retranslate #{{ versionNumber }}',
     'main.subtitle': 'Real simple translations for react.',
     'current.language': 'Your current language is {{ language }}',
   },
   et: {
-    'main.heading': 'retranslate',
+    'main.heading': 'retranslate #{{ versionNumber }}',
     'main.subtitle': 'Väga lihtsad tõlked reactile.',
     'current.language': 'Teie hetke keel on {{ language }}',
   },
@@ -36,7 +37,7 @@ const LanguageShower = withTranslations(({ translations: { translate, language }
 
 const App = () => (
   <TranslationProvider translations={translations} language={getLanguage()} fallbackLanguage="en">
-    <h1><Message>main.heading</Message></h1>
+    <h1><Message params={{ versionNumber: version }}>main.heading</Message></h1>
     <SomeComponent /> // this can also use the Message component, since there is a Provider up the tree.
     <Message className="lead">main.subtitle</Message>
     <LanguageShower />
