@@ -5,8 +5,12 @@
   "version": "0.1.0",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/trankenstien/retranslate/issues",
+    "url": "https://github.com/tankenstein/retranslate/issues",
     "email": "ukutammet@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/trankenstein/retranslate.git",
   },
   "author": "Uku Markus Tammet <ukutammet@gmail.com>",
   "devDependencies": {
