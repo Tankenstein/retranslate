@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/trankenstein/retranslate.git",
+    "url": "git://github.com/tankenstein/retranslate.git",
   },
   "author": "Uku Markus Tammet <ukutammet@gmail.com>",
   "devDependencies": {
