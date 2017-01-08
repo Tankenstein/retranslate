@@ -20,6 +20,4 @@ dependencies:
 
 test:
   override:
-    - yarn test --coverage && yarn build
-  post:
-    - cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - yarn test --coverage && yarn build && cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

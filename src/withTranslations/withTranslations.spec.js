@@ -25,7 +25,7 @@ describe('withTranslations higher order component', () => {
     return mount(
       <TestParentContextProvider>
         {component}
-      </TestParentContextProvider>
+      </TestParentContextProvider>,
     );
   }
 
@@ -84,7 +84,10 @@ describe('withTranslations higher order component', () => {
 
   it('has a spiffy displayName that wraps the given component\'s name', () => {
     const wrappedComponentName = () => mountedTree.find(WrappedTestComponent).name();
-    expect(wrappedComponentName()).toEqual('withTranslations(Component)');
+    expect([
+      'withTranslations(Component)', // in newer versions of node, it's called TestComponent
+      'withTranslations(TestComponent)',
+    ].indexOf(wrappedComponentName()) !== -1).toBe(true);
 
     function NamedTestComponent() {
       return <span>Test</span>;
