@@ -22,7 +22,11 @@ test:
   override:
     - yarn test && yarn build
   post:
-    - |
-      if [[ `git rev-parse --abbrev-ref HEAD`==master ]]; then
-        yarn coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-      fi
+    - yarn coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+
+deployment:
+  npm:
+    branch: master
+    commands:
+      - echo -e "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL" | npm login
+      - ./node_modules/.bin/publish
