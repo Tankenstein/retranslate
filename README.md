@@ -1,5 +1,6 @@
 retranslate
 ===========
+[![CircleCI](https://circleci.com/gh/Tankenstein/retranslate/tree/master.svg?style=shield)](https://circleci.com/gh/Tankenstein/retranslate/tree/master)
 
 Real simple translations for react. Lightweight (7.51 KB gzipped) and with no dependencies. Has 100% test coverage.
 
