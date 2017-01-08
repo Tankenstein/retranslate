@@ -37,6 +37,7 @@ const LanguageShower = withTranslations(({ translations: { translate, language }
 const App = () => (
   <TranslationProvider translations={translations} language={getLanguage()} fallbackLanguage="en">
     <h1><Message>main.heading</Message></h1>
+    <SomeComponent /> // this can also use the Message component, since there is a Provider up the tree.
     <Message className="lead">main.subtitle</Message>
     <LanguageShower />
   </TranslationProvider>
