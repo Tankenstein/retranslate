@@ -21,7 +21,6 @@ const translations = {
     'main.heading': 'retranslate',
     'main.subtitle': 'Real simple translations for react.',
     'current.language': 'Your current language is {{ language }}',
-    ''
   },
   et: {
     'main.heading': 'retranslate',
