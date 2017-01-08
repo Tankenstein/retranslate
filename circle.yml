@@ -20,4 +20,9 @@ dependencies:
 
 test:
   override:
-    - yarn coverage && yarn build && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - yarn test && yarn build
+  post:
+    - |
+      if [[ `git rev-parse --abbrev-ref HEAD`==master ]]; then
+        yarn coverage && cat ./coverage/lcov.info # | ./node_modules/coveralls/bin/coveralls.js
+      fi
