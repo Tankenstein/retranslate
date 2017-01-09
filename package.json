@@ -2,12 +2,19 @@
   "name": "retranslate",
   "description": "Real simple translations for react.",
   "main": "build/retranslate.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/tankenstein/retranslate/issues",
     "email": "ukutammet@gmail.com"
   },
+  "keywords": [
+    "react",
+    "i18n",
+    "localization",
+    "translate",
+    "translation"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/tankenstein/retranslate.git"
