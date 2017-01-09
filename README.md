@@ -17,6 +17,9 @@ import SomeComponent from './someComponent';
 import { getLanguage } from './config'; // some functionality to select a language, in this example, hopefully returning en or et.
 import { version } from '../../package.json';
 
+// You can import these from a json file that tools like crowdin can use, like
+// import enTranslations from './translations.en.json';
+// import etTranslations from './translations.et.json';
 const translations = {
   en: {
     'main.heading': 'retranslate #{{ versionNumber }}',
