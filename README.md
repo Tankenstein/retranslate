@@ -24,7 +24,7 @@ const translations = {
   en: {
     'main.heading': 'retranslate #{{ versionNumber }}',
     'main.subtitle': 'Real simple translations for react.',
-    'current.language': 'Your current language is {{ language }}',
+    'current.language': 'Your current language is {{ currentLanguage }}',
   },
   et: {
     'main.heading': 'retranslate #{{ versionNumber }}',
@@ -35,11 +35,11 @@ const translations = {
 
 // You can use the withTranslations higher-order component to get a hold of the current language and the translate function.
 const LanguageShower = withTranslations(({ translations: { translate, language } }) => (
-  <p>{translate('current.language', { language })}</p>
+  <p>{translate('current.language', { currentLanguage: language })}</p>
 ));
 
 const App = () => (
-  <TranslationProvider translations={translations} language={getLanguage()} fallbackLanguage="en">
+  <TranslationProvider messages={translations} language={getLanguage()} fallbackLanguage="en">
     <h1><Message params={{ versionNumber: version }}>main.heading</Message></h1>
     <SomeComponent /> // this can also use the Message component, since there is a Provider up the tree.
     <Message className="lead">main.subtitle</Message>
@@ -50,7 +50,7 @@ const App = () => (
 
 ### Provider
 
-retranslate is configured using the `Provider`. You pass `Provider` `translations`, a `language` and a `fallbackLanguage` (just in case). Wrap your application with `Provider` to make retranslate work.
+retranslate is configured using the `Provider`. You pass `Provider` `messages`, a `language` and a `fallbackLanguage` (just in case). Wrap your application with `Provider` to make retranslate work.
 
 ### Message
 
