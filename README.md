@@ -45,7 +45,7 @@ const App = () => (
     <h1><Message params={{ versionNumber: version }}>main.heading</Message></h1>
     <SomeComponent /> // this can also use the Message component, since there is a Provider up the tree.
     <Message className="lead">main.subtitle</Message> // you can apply classes to the translated string
-    <Message dangerouslyTranslateInnerHtml="bold.thing" /> // this does not escape HTML. Dangerous to use, be careful.
+    <Message dangerouslyTranslateInnerHTML="bold.thing" /> // this does not escape HTML. Dangerous to use, be careful.
     <LanguageShower />
   </TranslationProvider>
 );

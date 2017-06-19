@@ -45,7 +45,7 @@ describe('Message', () => {
     const html = '<h1>this is a heading<b>with bold</b></h1>';
     const translate = jest.fn(() => html);
     const context = { translations: { translate } };
-    const component = shallow(<Message dangerouslyTranslateInnerHtml="message.id" />, { context });
+    const component = shallow(<Message dangerouslyTranslateInnerHTML="message.id" />, { context });
     expect(component.html()).toBe(`<span>${html}</span>`);
   });
 });

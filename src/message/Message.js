@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 
 const Message = (
-  { children, params, className, dangerouslyTranslateInnerHtml },
+  { children, params, className, dangerouslyTranslateInnerHTML },
   { translations: { translate } },
 ) => {
-  if (dangerouslyTranslateInnerHtml) {
+  if (dangerouslyTranslateInnerHTML) {
     /* eslint-disable react/no-danger */
     return (
       <span
         className={className}
-        dangerouslySetInnerHTML={{ __html: translate(dangerouslyTranslateInnerHtml, params) }}
+        dangerouslySetInnerHTML={{ __html: translate(dangerouslyTranslateInnerHTML, params) }}
       />
     );
     /* eslint-enable react/no-danger */
@@ -21,7 +21,7 @@ Message.displayName = 'Message';
 Message.propTypes = {
   children: PropTypes.string,
   params: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  dangerouslyTranslateInnerHtml: PropTypes.string,
+  dangerouslyTranslateInnerHTML: PropTypes.string,
   className: PropTypes.string,
 };
 Message.contextTypes = {
