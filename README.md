@@ -25,11 +25,13 @@ const translations = {
     'main.heading': 'retranslate #{{ versionNumber }}',
     'main.subtitle': 'Real simple translations for react.',
     'current.language': 'Your current language is {{ currentLanguage }}',
+    'bold.thing': 'This <b>thing</b> is bold',
   },
   et: {
     'main.heading': 'retranslate #{{ versionNumber }}',
     'main.subtitle': 'Väga lihtsad tõlked reactile.',
     'current.language': 'Teie hetke keel on {{ language }}',
+    'bold.thing': 'See <b>asi</b> on tumedam',
   },
 };
 
@@ -42,7 +44,8 @@ const App = () => (
   <TranslationProvider messages={translations} language={getLanguage()} fallbackLanguage="en">
     <h1><Message params={{ versionNumber: version }}>main.heading</Message></h1>
     <SomeComponent /> // this can also use the Message component, since there is a Provider up the tree.
-    <Message className="lead">main.subtitle</Message>
+    <Message className="lead">main.subtitle</Message> // you can apply classes to the translated string
+    <Message dangerouslyTranslateInnerHtml="bold.thing" /> // this does not escape HTML. Dangerous to use, be careful.
     <LanguageShower />
   </TranslationProvider>
 );
