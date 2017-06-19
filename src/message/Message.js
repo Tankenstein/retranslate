@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 
-const Message = ({ children, params, className }, { translations: { translate } }) => (
-  <span className={className}>{translate(children, params)}</span>
-);
+const Message = ({ children, params, className }, { translations: { translate } }) =>
+  <span className={className}>{translate(children, params)}</span>;
 
 Message.displayName = 'Message';
 Message.propTypes = {

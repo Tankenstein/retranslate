@@ -5,10 +5,12 @@ import { TranslationContext } from '../common/PropTypes';
 function interpolateTemplate(template, params) {
   const additionalParameterPattern = /\{\{.*\}\}/g;
   const createVariableReplacePattern = variable => new RegExp(`{{\\s*${variable}\\s*}}`, 'g');
-  return Object
-    .keys(params)
-    .reduce((replacedString, key) =>
-      replacedString.replace(createVariableReplacePattern(key), params[key]), template)
+  return Object.keys(params)
+    .reduce(
+      (replacedString, key) =>
+        replacedString.replace(createVariableReplacePattern(key), params[key]),
+      template,
+    )
     .replace(additionalParameterPattern, '');
 }
 

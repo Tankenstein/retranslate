@@ -8,7 +8,7 @@ describe('Translation Provider', () => {
   let props;
 
   function getNewInstanceContext() {
-    context = (new Provider(props)).getChildContext();
+    context = new Provider(props).getChildContext();
   }
 
   function translate(key, params) {
@@ -77,8 +77,9 @@ describe('Translation Provider', () => {
   it('interpolates multiple variables', () => {
     props.messages = { language: { test: 'interpolate {{ first }} and {{ second }}' } };
     getNewInstanceContext();
-    expect(translate('test', { first: 'this', second: 'that' }))
-      .toEqual('interpolate this and that');
+    expect(translate('test', { first: 'this', second: 'that' })).toEqual(
+      'interpolate this and that',
+    );
   });
 
   it('interpolates the same variable multiple times', () => {
