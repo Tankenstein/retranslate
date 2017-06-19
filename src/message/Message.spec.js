@@ -30,4 +30,22 @@ describe('Message', () => {
     const component = shallow(<Message className="test-class">message.id</Message>, { context });
     expect(component.hasClass('test-class')).toBe(true);
   });
+
+  it('translates with sanitized html by default', () => {
+    const html = '<h1>this is a heading<b>with bold</b></h1>';
+    const translate = jest.fn(() => html);
+    const context = { translations: { translate } };
+    const component = shallow(<Message>message.id</Message>, { context });
+    expect(component.html()).toBe(
+      '<span>&lt;h1&gt;this is a heading&lt;b&gt;with bold&lt;/b&gt;&lt;/h1&gt;</span>',
+    );
+  });
+
+  it('can translate dangerously into unsanitized html', () => {
+    const html = '<h1>this is a heading<b>with bold</b></h1>';
+    const translate = jest.fn(() => html);
+    const context = { translations: { translate } };
+    const component = shallow(<Message dangerouslyTranslateInnerHtml="message.id" />, { context });
+    expect(component.html()).toBe(`<span>${html}</span>`);
+  });
 });
