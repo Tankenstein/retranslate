@@ -25,13 +25,13 @@ const translations = {
     'main.heading': 'retranslate #{{ versionNumber }}',
     'main.subtitle': 'Real simple translations for react.',
     'current.language': 'Your current language is {{ currentLanguage }}',
-    'bold.thing': 'This <b>thing</b> is bold',
+    'bold.thing': 'This <b>text</b> is bold',
   },
   et: {
     'main.heading': 'retranslate #{{ versionNumber }}',
     'main.subtitle': 'Väga lihtsad tõlked reactile.',
     'current.language': 'Teie hetke keel on {{ language }}',
-    'bold.thing': 'See <b>asi</b> on tumedam',
+    'bold.thing': 'See <b>tekst</b> on tumedam',
   },
 };
 
