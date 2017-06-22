@@ -15,7 +15,7 @@ describe('withTranslations higher order component', () => {
     }
 
     render() {
-      return <div>{this.props.children}</div>;
+      return <div>{this.props.children}</div>; // eslint-disable-line
     }
   }
 
@@ -82,12 +82,14 @@ describe('withTranslations higher order component', () => {
     expect(testComponentProp('className')).toBe(propsPassedToWrappedComponent.className);
   });
 
-  it('has a spiffy displayName that wraps the given component\'s name', () => {
+  it("has a spiffy displayName that wraps the given component's name", () => {
     const wrappedComponentName = () => mountedTree.find(WrappedTestComponent).name();
-    expect([
-      'withTranslations(Component)', // in newer versions of node, it's called TestComponent
-      'withTranslations(TestComponent)',
-    ].indexOf(wrappedComponentName()) !== -1).toBe(true);
+    expect(
+      [
+        'withTranslations(Component)', // in newer versions of node, it's called TestComponent
+        'withTranslations(TestComponent)',
+      ].indexOf(wrappedComponentName()) !== -1,
+    ).toBe(true);
 
     function NamedTestComponent() {
       return <span>Test</span>;

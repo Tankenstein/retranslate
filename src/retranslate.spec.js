@@ -5,13 +5,15 @@ import { mount } from 'enzyme';
 import { Message, Provider, withTranslations } from '.';
 
 describe('retranslate', () => {
-  const CustomThing = withTranslations(({ translations: { language, translate } }) => (
+  const CustomThing = withTranslations(({ translations: { language, translate } }) =>
     <h1>
       {translate('fourth', { language })}
-    </h1>
-  ));
+    </h1>,
+  );
 
+  /* eslint-disable */
   const TestApp = ({ language }) => {
+    /* eslint-enable */
     const messages = {
       en: {
         first: 'First message.',
@@ -42,10 +44,14 @@ describe('retranslate', () => {
   };
 
   let app;
-  const englishApp = '<div><h1>Current language is en.</h1><span class="first-test">First message.</span><span>Second message with param test.</span><span>Third message with params hello and world.</span><span>missing.string</span></div>';
-  const estonianApp = '<div><h1>Hetke keel on et.</h1><span class="first-test">Esimene sõnum</span><span>Teine sõnum parameetriga test.</span><span>Kolmas sõnum parameetritega hello ja world.</span><span>missing.string</span></div>';
-  const englishWithSomeMissingStringsApp = '<div><h1>Current language is englishWithSomeMissingStrings.</h1><span class="first-test">First message.</span><span>Second, but different message with param test.</span><span>Third message with params hello and world.</span><span>missing.string</span></div>';
-  const fallbackLanguageApp = '<div><h1>Current language is oops!.</h1><span class="first-test">First message.</span><span>Second message with param test.</span><span>Third message with params hello and world.</span><span>missing.string</span></div>';
+  const englishApp =
+    '<div><h1>Current language is en.</h1><span class="first-test">First message.</span><span>Second message with param test.</span><span>Third message with params hello and world.</span><span>missing.string</span></div>';
+  const estonianApp =
+    '<div><h1>Hetke keel on et.</h1><span class="first-test">Esimene sõnum</span><span>Teine sõnum parameetriga test.</span><span>Kolmas sõnum parameetritega hello ja world.</span><span>missing.string</span></div>';
+  const englishWithSomeMissingStringsApp =
+    '<div><h1>Current language is englishWithSomeMissingStrings.</h1><span class="first-test">First message.</span><span>Second, but different message with param test.</span><span>Third message with params hello and world.</span><span>missing.string</span></div>';
+  const fallbackLanguageApp =
+    '<div><h1>Current language is oops!.</h1><span class="first-test">First message.</span><span>Second message with param test.</span><span>Third message with params hello and world.</span><span>missing.string</span></div>';
 
   function mountWithLanguage(language) {
     app = mount(<TestApp language={language} />);
