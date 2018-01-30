@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Provider from './Provider';
 
 describe('Translation Provider', () => {
@@ -27,6 +27,33 @@ describe('Translation Provider', () => {
   it('renders children given to it', () => {
     component = shallow(<Provider {...props}>Hello!</Provider>);
     expect(component.text()).toEqual('Hello!');
+  });
+
+  it('renders using span as wrapper', () => {
+    component = shallow(<Provider {...props} wrapperElement="span">Hello!</Provider>);
+    expect(component.text()).toEqual('Hello!');
+    expect(component.type()).toEqual('span');
+  });
+
+  it('renders using a function component as wrapper', () => {
+    function Wrapper({ children }) {
+      return <div className="function-wrapper">{ children }</div>
+    }
+    component = shallow(<Provider {...props} wrapperElement={Wrapper}>Hello!</Provider>);
+    expect(component.html()).toEqual(
+      '<div class="function-wrapper">Hello!</div>'
+    );
+  });
+  it('renders using a class component as wrapper', () => {
+    class Wrapper extends React.Component {
+      render() {
+        return <div className="class-wrapper">{ this.props.children }</div>
+      }
+    }
+    component = mount(<Provider {...props} wrapperElement={Wrapper}>Hello!</Provider>);
+    expect(component.html()).toEqual(
+      '<div class="class-wrapper">Hello!</div>'
+    );
   });
 
   it('translates strings in different languages', () => {

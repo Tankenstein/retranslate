@@ -53,7 +53,8 @@ const App = () => (
 
 ### Provider
 
-retranslate is configured using the `Provider`. You pass `Provider` `messages`, a `language` and a `fallbackLanguage` (just in case). Wrap your application with `Provider` to make retranslate work.
+retranslate is configured using the `Provider`. You pass `Provider` `messages`, a `language` and a `fallbackLanguage` (just in case). Wrap your application with `Provider` to make retranslate work. The `Provider` takes an optional argument `wrapperElement`, which can be used to configure which element is used to render the provider. This can either be a string
+to use a DOM element (e.g. `<Provider wrapperElement="span">`) or some react element (e.g. `<Provider wrapperElement={React.Fragment}>`).
 
 ### Message
 
