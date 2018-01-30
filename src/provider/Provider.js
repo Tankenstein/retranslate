@@ -31,7 +31,8 @@ class Provider extends Component {
   }
 
   render() {
-    return <div>{this.props.children}</div>;
+    const element = this.props.wrapperElement || 'div';
+    return React.createElement(element, {}, this.props.children);
   }
 }
 
@@ -44,6 +45,10 @@ Provider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
+    PropTypes.string,
+  ]),
+  wrapperElement: PropTypes.oneOfType([
+    PropTypes.func,
     PropTypes.string,
   ]),
 };
