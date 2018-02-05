@@ -40,6 +40,13 @@ const LanguageShower = withTranslations(({ translations: { translate, language }
   <p>{translate('current.language', { currentLanguage: language })}</p>
 ));
 
+// withTranslations is also available through a render prop with <WithTranslations>
+const AnotherLanguageShower = () => (
+  <WithTranslations>{({ translate, language }) =>(
+    <p>{translate('current.language', { currentLanguage: language })}</p>
+  )}</WithTranslations>
+)
+
 const App = () => (
   <TranslationProvider messages={translations} language={getLanguage()} fallbackLanguage="en">
     <h1><Message params={{ versionNumber: version }}>main.heading</Message></h1>
@@ -47,6 +54,7 @@ const App = () => (
     <Message className="lead">main.subtitle</Message> // you can apply classes to the translated string
     <Message dangerouslyTranslateInnerHTML="bold.thing" /> // this does not escape HTML. Dangerous to use, be careful.
     <LanguageShower />
+    <AnotherLanguageShower />
   </TranslationProvider>
 );
 ```
