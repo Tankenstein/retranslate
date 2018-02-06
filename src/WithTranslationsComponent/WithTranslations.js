@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import { PropTypes } from 'react';
 import withTranslations from '../withTranslations';
 import { TranslationContext } from '../common/PropTypes';
 
@@ -21,11 +21,11 @@ import { TranslationContext } from '../common/PropTypes';
  * }
  */
 const WithTranslations = withTranslations(({ children, translations }) => (
-	children(translations))
+  children(translations)),
 );
 WithTranslations.displayName = 'WithTranslations';
 WithTranslations.propTypes = {
-  children: PropTypes.func.isRequired
+  children: PropTypes.func.isRequired,
 };
 WithTranslations.contextTypes = TranslationContext;
 
