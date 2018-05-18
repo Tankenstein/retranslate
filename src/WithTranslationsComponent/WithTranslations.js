@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import withTranslations from '../withTranslations';
 import { TranslationContext } from '../common/PropTypes';
 
@@ -20,9 +20,7 @@ import { TranslationContext } from '../common/PropTypes';
  *   )
  * }
  */
-const WithTranslations = withTranslations(({ children, translations }) => (
-  children(translations)),
-);
+const WithTranslations = withTranslations(({ children, translations }) => children(translations));
 WithTranslations.displayName = 'WithTranslations';
 WithTranslations.propTypes = {
   children: PropTypes.func.isRequired,
