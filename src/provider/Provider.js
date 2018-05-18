@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { TranslationContext } from '../common/PropTypes';
 
@@ -47,10 +48,7 @@ Provider.propTypes = {
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.string,
   ]),
-  wrapperElement: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string,
-  ]),
+  wrapperElement: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 
 Provider.childContextTypes = TranslationContext;
