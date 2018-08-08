@@ -24,11 +24,17 @@ describe('Message', () => {
     expect(component.text()).toEqual('translated value hello');
   });
 
-  it('adds given classes to its children', () => {
+  it('passes given props, including classes, to its children', () => {
     const translate = jest.fn(() => 'message');
     const context = { translations: { translate } };
-    const component = shallow(<Message className="test-class">message.id</Message>, { context });
+    const component = shallow(
+      <Message className="test-class" data-toggle="popover">
+        message.id
+      </Message>,
+      { context },
+    );
     expect(component.hasClass('test-class')).toBe(true);
+    expect(component.prop('data-toggle')).toBe('popover');
   });
 
   it('translates with sanitized html by default', () => {
