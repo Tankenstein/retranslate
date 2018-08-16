@@ -1,20 +1,18 @@
 import React, { PropTypes } from 'react';
 
-const Message = (
-  { children, params, className, dangerouslyTranslateInnerHTML },
-  { translations: { translate } },
-) => {
+const Message = (props, { translations: { translate } }) => {
+  const { children, params, dangerouslyTranslateInnerHTML, ...otherProps } = props;
   if (dangerouslyTranslateInnerHTML) {
     /* eslint-disable react/no-danger */
     return (
       <span
-        className={className}
+        {...otherProps}
         dangerouslySetInnerHTML={{ __html: translate(dangerouslyTranslateInnerHTML, params) }}
       />
     );
     /* eslint-enable react/no-danger */
   }
-  return <span className={className}>{translate(children, params)}</span>;
+  return <span {...otherProps}>{translate(children, params)}</span>;
 };
 
 Message.displayName = 'Message';

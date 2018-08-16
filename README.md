@@ -51,7 +51,7 @@ const App = () => (
   <TranslationProvider messages={translations} language={getLanguage()} fallbackLanguage="en">
     <h1><Message params={{ versionNumber: version }}>main.heading</Message></h1>
     <SomeComponent /> // this can also use the Message component, since there is a Provider up the tree.
-    <Message className="lead">main.subtitle</Message> // you can apply classes to the translated string
+    <Message className="lead" data-toggle="popover">main.subtitle</Message> // you can pass props to the generated span containing the translation
     <Message dangerouslyTranslateInnerHTML="bold.thing" /> // this does not escape HTML. Dangerous to use, be careful.
     <LanguageShower />
     <AnotherLanguageShower />
