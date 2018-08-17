@@ -8,5 +8,5 @@ deployment:
   npm:
     branch: master
     commands:
-      - echo -e "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL" | npm login
+      - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - ./node_modules/.bin/publish
