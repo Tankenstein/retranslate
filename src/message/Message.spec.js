@@ -59,4 +59,14 @@ describe('Message', () => {
       '<span><h1>some safe html</h1></span>&lt;span&gt;some sketchy user input&lt;/span&gt;',
     );
   });
+
+  it('allows to translate into a string', () => {
+    const translate = jest.fn(() => [
+      { dangerous: false, value: 'just some ' },
+      { dangerous: true, value: 'text' },
+    ]);
+    const context = { translations: { translate } };
+    const component = render(<Message asString>message.id</Message>, context);
+    expect(component.html()).toBe('just some text');
+  });
 });

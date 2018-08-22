@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 
 import { Consumer as ContextConsumer } from '../common/context';
 
-const Message = ({ children, params, dangerouslyTranslateInnerHTML }) => (
+const Message = ({ children, params, dangerouslyTranslateInnerHTML, asString }) => (
   <ContextConsumer>
     {({ translations }) => {
+      if (asString) {
+        return translations
+          .translate(children, params)
+          .map(translation => translation.value)
+          .join('');
+      }
       if (!dangerouslyTranslateInnerHTML) {
         return translations.translate(children, params).map(translation => translation.value);
       }
@@ -27,6 +33,7 @@ Message.propTypes = {
   children: PropTypes.string,
   params: PropTypes.objectOf(PropTypes.node),
   dangerouslyTranslateInnerHTML: PropTypes.string,
+  asString: Types.bool,
 };
 
 export default Message;
