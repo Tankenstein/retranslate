@@ -15,7 +15,10 @@ describe('Message', () => {
   }
 
   it('translates the given message', () => {
-    const translate = jest.fn(() => 'translated value');
+    const translate = jest.fn(() => [
+      { dangerous: false, value: 'translated ' },
+      { dangerous: true, value: 'value' },
+    ]);
     const context = { translations: { translate } };
     const component = render(<Message>message.id</Message>, context);
     expect(translate).toHaveBeenCalledTimes(1);
@@ -24,7 +27,10 @@ describe('Message', () => {
   });
 
   it('translates with parameters', () => {
-    const translate = jest.fn((key, params) => `translated value ${params.test}`);
+    const translate = jest.fn((key, params) => [
+      { dangerous: false, value: 'translated value ' },
+      { dangerous: true, value: params.test },
+    ]);
     const context = { translations: { translate } };
     const component = render(<Message params={{ test: 'hello' }}>message.id</Message>, context);
     expect(translate).toHaveBeenCalledTimes(1);
@@ -34,7 +40,7 @@ describe('Message', () => {
 
   it('translates with sanitized html', () => {
     const html = '<h1>this is a heading<b>with bold</b></h1>';
-    const translate = jest.fn(() => html);
+    const translate = jest.fn(() => [{ dangerous: false, value: html }]);
     const context = { translations: { translate } };
     const component = render(<Message>message.id</Message>, context);
     expect(component.html()).toBe(
@@ -42,13 +48,15 @@ describe('Message', () => {
     );
   });
 
-  /*
-  it('can translate dangerously into unsanitized html', () => {
-    const html = '<h1>this is a heading<b>with bold</b></h1>';
-    const translate = jest.fn(() => html);
+  it('allows to translate things as html', () => {
+    const translate = jest.fn(() => [
+      { dangerous: false, value: '<h1>some safe html</h1>' },
+      { dangerous: true, value: '<span>some sketchy user input</span>' },
+    ]);
     const context = { translations: { translate } };
-    const component = render(<Message dangerouslyTranslateInnerHTML="message.id" />, { context });
-    expect(component.html()).toBe(`<span>${html}</span>`);
+    const component = render(<Message dangerouslyTranslateInnerHTML="message.id" />, context);
+    expect(component.html()).toBe(
+      '<span><h1>some safe html</h1></span>&lt;span&gt;some sketchy user input&lt;/span&gt;',
+    );
   });
-  */
 });

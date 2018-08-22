@@ -3,16 +3,47 @@ import PropTypes from 'prop-types';
 
 import { Provider as ContextProvider } from '../common/context';
 
-function interpolateTemplate(template, params) {
-  const additionalParameterPattern = /\{\{.*\}\}/g;
-  const createVariableReplacePattern = variable => new RegExp(`{{\\s*${variable}\\s*}}`, 'g');
-  return Object.keys(params)
-    .reduce(
-      (replacedString, key) =>
-        replacedString.replace(createVariableReplacePattern(key), params[key]),
-      template,
-    )
-    .replace(additionalParameterPattern, '');
+function gatherMatchesForKey(template, key) {
+  const variablePositions = [];
+  const variablePattern = new RegExp(`{{\\s*${key}\\s*}}`);
+  const match = template.match(variablePattern);
+  if (match) {
+    variablePositions.push({
+      key,
+      position: match.index,
+      length: match[0].length,
+    });
+    const offset = match.index + match.length;
+    const remainingTemplate = template.slice(offset);
+    const childMatches = gatherMatchesForKey(remainingTemplate, key);
+    childMatches.forEach((childMatch) => {
+      variablePositions.push({
+        key,
+        position: childMatch.position + offset,
+        length: childMatch.length,
+      });
+    });
+  }
+  return variablePositions;
+}
+
+function renderTemplateIntoTemplateParts(template, params) {
+  const variablePositions = Object.keys(params)
+    .map(key => gatherMatchesForKey(template, key))
+    .reduce((result, keyMatches) => result.concat(keyMatches), [])
+    .sort((p1, p2) => p1.position - p2.position);
+  const result = [];
+  let remainingOffset = 0;
+  variablePositions.forEach(({ key, position, length }) => {
+    result.push({ dangerous: false, value: template.slice(remainingOffset, position) });
+    result.push({ dangerous: true, value: params[key] });
+    remainingOffset = position + length;
+  });
+  const leftover = template.slice(remainingOffset);
+  if (leftover.length) {
+    result.push({ dangerous: false, value: leftover });
+  }
+  return result.filter(translation => translation.value);
 }
 
 class Provider extends Component {
@@ -24,11 +55,11 @@ class Provider extends Component {
   translate(key, parameters = {}) {
     const { language, messages, fallbackLanguage } = this.props;
     if (messages[language] && messages[language][key]) {
-      return interpolateTemplate(messages[language][key], parameters);
+      return renderTemplateIntoTemplateParts(messages[language][key], parameters);
     } else if (messages[fallbackLanguage] && messages[fallbackLanguage][key]) {
-      return interpolateTemplate(messages[fallbackLanguage][key], parameters);
+      return renderTemplateIntoTemplateParts(messages[fallbackLanguage][key], parameters);
     }
-    return key;
+    return [{ dangerous: false, value: key }];
   }
 
   render() {
@@ -41,7 +72,7 @@ Provider.displayName = 'TranslationProvider';
 Provider.propTypes = {
   language: PropTypes.string,
   fallbackLanguage: PropTypes.string.isRequired,
-  messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.node)).isRequired,
   children: PropTypes.node,
 };
 
