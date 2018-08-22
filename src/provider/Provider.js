@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TranslationContext } from '../common/PropTypes';
+import { Provider as ContextProvider } from '../common/context';
 
 function interpolateTemplate(template, params) {
   const additionalParameterPattern = /\{\{.*\}\}/g;
@@ -16,7 +16,7 @@ function interpolateTemplate(template, params) {
 }
 
 class Provider extends Component {
-  getChildContext() {
+  getContext() {
     const { language } = this.props;
     return { translations: { language, translate: this.translate.bind(this) } };
   }
@@ -32,8 +32,7 @@ class Provider extends Component {
   }
 
   render() {
-    const element = this.props.wrapperElement || 'div';
-    return React.createElement(element, {}, this.props.children);
+    return <ContextProvider value={this.getContext()}>{this.props.children}</ContextProvider>;
   }
 }
 
@@ -43,14 +42,7 @@ Provider.propTypes = {
   language: PropTypes.string,
   fallbackLanguage: PropTypes.string.isRequired,
   messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)).isRequired,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.string,
-  ]),
-  wrapperElement: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  children: PropTypes.node,
 };
-
-Provider.childContextTypes = TranslationContext;
 
 export default Provider;

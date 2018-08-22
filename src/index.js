@@ -1,6 +1,6 @@
 import MessageModule from './message';
 import ProviderModule from './provider';
-import WithTranslationsComponentModule from './WithTranslationsComponent';
+import { Consumer as WithTranslationsComponentModule } from './common/context';
 import withTranslationsModule from './withTranslations';
 
 export const Message = MessageModule;

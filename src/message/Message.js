@@ -1,32 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Message = (props, { translations: { translate } }) => {
-  const { children, params, dangerouslyTranslateInnerHTML, ...otherProps } = props;
-  if (dangerouslyTranslateInnerHTML) {
-    /* eslint-disable react/no-danger */
-    return (
-      <span
-        {...otherProps}
-        dangerouslySetInnerHTML={{ __html: translate(dangerouslyTranslateInnerHTML, params) }}
-      />
-    );
-    /* eslint-enable react/no-danger */
-  }
-  return <span {...otherProps}>{translate(children, params)}</span>;
-};
+import { Consumer as ContextConsumer } from '../common/context';
+
+const Message = ({ children, params }) => (
+  <ContextConsumer>
+    {({ translations }) => translations.translate(children, params)}
+  </ContextConsumer>
+);
 
 Message.displayName = 'Message';
 Message.propTypes = {
   children: PropTypes.string,
-  params: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  dangerouslyTranslateInnerHTML: PropTypes.string,
-  className: PropTypes.string,
-};
-Message.contextTypes = {
-  translations: PropTypes.shape({
-    translate: PropTypes.func.isRequired,
-  }).isRequired,
+  params: PropTypes.objectOf(PropTypes.node),
 };
 
 export default Message;

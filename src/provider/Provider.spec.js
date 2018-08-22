@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import Provider from './Provider';
 
 describe('Translation Provider', () => {
@@ -8,7 +8,7 @@ describe('Translation Provider', () => {
   let props;
 
   function getNewInstanceContext() {
-    context = new Provider(props).getChildContext();
+    context = component.instance().getContext();
   }
 
   function translate(key, params) {
@@ -21,39 +21,12 @@ describe('Translation Provider', () => {
       messages: {},
       language: 'language',
     };
-    getNewInstanceContext();
+    component = shallow(<Provider {...props} />);
   });
 
   it('renders children given to it', () => {
     component = shallow(<Provider {...props}>Hello!</Provider>);
     expect(component.text()).toEqual('Hello!');
-  });
-
-  it('renders using span as wrapper', () => {
-    component = shallow(<Provider {...props} wrapperElement="span">Hello!</Provider>);
-    expect(component.text()).toEqual('Hello!');
-    expect(component.type()).toEqual('span');
-  });
-
-  it('renders using a function component as wrapper', () => {
-    function Wrapper({ children }) {
-      return <div className="function-wrapper">{ children }</div>
-    }
-    component = shallow(<Provider {...props} wrapperElement={Wrapper}>Hello!</Provider>);
-    expect(component.html()).toEqual(
-      '<div class="function-wrapper">Hello!</div>'
-    );
-  });
-  it('renders using a class component as wrapper', () => {
-    class Wrapper extends React.Component {
-      render() {
-        return <div className="class-wrapper">{ this.props.children }</div>
-      }
-    }
-    component = mount(<Provider {...props} wrapperElement={Wrapper}>Hello!</Provider>);
-    expect(component.html()).toEqual(
-      '<div class="class-wrapper">Hello!</div>'
-    );
   });
 
   it('translates strings in different languages', () => {
@@ -62,12 +35,14 @@ describe('Translation Provider', () => {
       firstLanguage: { one: 'firstLanguageOne', two: 'firstLanguageTwo' },
       secondLanguage: { one: 'secondLanguageOne', two: 'secondLanguageTwo' },
     };
+    component.setProps(props);
     getNewInstanceContext();
     expect(context.translations.language).toEqual('firstLanguage');
     expect(translate('one')).toEqual('firstLanguageOne');
     expect(translate('two')).toEqual('firstLanguageTwo');
 
     props.language = 'secondLanguage';
+    component.setProps(props);
     getNewInstanceContext();
     expect(context.translations.language).toEqual('secondLanguage');
     expect(translate('one')).toEqual('secondLanguageOne');
@@ -78,6 +53,7 @@ describe('Translation Provider', () => {
     props.language = 'firstLanguage';
     props.messages = { fallback: { message: 'hey' } };
     props.fallbackLanguage = 'fallback';
+    component.setProps(props);
     getNewInstanceContext();
     expect(translate('message')).toEqual('hey');
     expect(context.translations.language).toEqual('firstLanguage');
@@ -85,6 +61,7 @@ describe('Translation Provider', () => {
 
   it('interpolates variables', () => {
     props.messages = { language: { test: 'interpolate {{me}}' } };
+    component.setProps(props);
     getNewInstanceContext();
     expect(translate('test', { me: 'this' })).toEqual('interpolate this');
   });
@@ -96,6 +73,7 @@ describe('Translation Provider', () => {
         testThree: 'interpolate {{ thisToo        }}',
       },
     };
+    component.setProps(props);
     getNewInstanceContext();
     expect(translate('testTwo', { this: 'hello' })).toEqual('interpolate hello');
     expect(translate('testThree', { thisToo: 'hello' })).toEqual('interpolate hello');
@@ -103,6 +81,7 @@ describe('Translation Provider', () => {
 
   it('interpolates multiple variables', () => {
     props.messages = { language: { test: 'interpolate {{ first }} and {{ second }}' } };
+    component.setProps(props);
     getNewInstanceContext();
     expect(translate('test', { first: 'this', second: 'that' })).toEqual(
       'interpolate this and that',
@@ -111,6 +90,7 @@ describe('Translation Provider', () => {
 
   it('interpolates the same variable multiple times', () => {
     props.messages = { language: { test: '{{ thing }} === {{ thing }}' } };
+    component.setProps(props);
     getNewInstanceContext();
     expect(translate('test', { thing: 'hello' })).toEqual('hello === hello');
   });
