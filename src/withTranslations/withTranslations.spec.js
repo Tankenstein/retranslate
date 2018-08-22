@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
+
+import { Provider as ContextProvider } from '../common/context';
 import withTranslations from './withTranslations';
-import { TranslationContext } from '../common/PropTypes';
 
 describe('withTranslations higher order component', () => {
   let testContext;
@@ -9,24 +10,8 @@ describe('withTranslations higher order component', () => {
   let WrappedTestComponent;
   let mountedTree;
 
-  class TestParentContextProvider extends Component {
-    getChildContext() {
-      return testContext;
-    }
-
-    render() {
-      return <div>{this.props.children}</div>; // eslint-disable-line
-    }
-  }
-
-  TestParentContextProvider.childContextTypes = TranslationContext;
-
   function mountWithContext(component) {
-    return mount(
-      <TestParentContextProvider>
-        {component}
-      </TestParentContextProvider>,
-    );
+    return mount(<ContextProvider value={testContext}>{component}</ContextProvider>);
   }
 
   function mountTree(propsPassedToWrappedComponent = {}) {
