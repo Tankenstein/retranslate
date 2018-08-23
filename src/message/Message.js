@@ -33,7 +33,13 @@ Message.propTypes = {
   children: PropTypes.string,
   params: PropTypes.objectOf(PropTypes.node),
   dangerouslyTranslateInnerHTML: PropTypes.string,
-  asString: Types.bool,
+  asString: PropTypes.bool,
+};
+Message.defaultProps = {
+  children: '',
+  params: {},
+  dangerouslyTranslateInnerHTML: '',
+  asString: false,
 };
 
 export default Message;

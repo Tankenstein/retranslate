@@ -1,4 +1,7 @@
 // This file does end to end tests of retranslate.
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react';
 import { mount } from 'enzyme';
 
