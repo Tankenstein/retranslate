@@ -72,21 +72,3 @@ workflows:
           filters:
             branches:
               only: master
-
-####################################
-machine:
-  node:
-    version: 8.9.4
-
-test:
-  override:
-    - npm test && npm run build
-  post:
-    - npm run coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
-
-deployment:
-  npm:
-    branch: master
-    commands:
-      - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - ./node_modules/.bin/publish
