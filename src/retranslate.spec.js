@@ -34,9 +34,9 @@ describe('retranslate', () => {
       <div>
         <Provider messages={messages} language={language} fallbackLanguage="en">
           <CustomThing />
-          <Message>first</Message>
-          <Message params={{ first: 'test' }}>second</Message>
-          <Message params={{ second: 'hello', third: 'world' }}>third</Message>
+          <Message asString>first</Message>
+          <Message params={{ first: <h1>test</h1> }}>second</Message>
+          <Message params={{ second: '<span>hello</span>', third: 'world' }}>third</Message>
           <Message>missing.string</Message>
         </Provider>
       </div>
@@ -45,13 +45,13 @@ describe('retranslate', () => {
 
   let app;
   const englishApp =
-    '<div><h1>Current language is en.</h1>First message.Second message with param test.Third message with params hello and world.missing.string</div>';
+    '<div><h1>Current language is en.</h1>First message.Second message with param <h1>test</h1>.Third message with params &lt;span&gt;hello&lt;/span&gt; and world.missing.string</div>';
   const estonianApp =
-    '<div><h1>Hetke keel on et.</h1>Esimene sõnumTeine sõnum parameetriga test.Kolmas sõnum parameetritega hello ja world.missing.string</div>';
+    '<div><h1>Hetke keel on et.</h1>Esimene sõnumTeine sõnum parameetriga <h1>test</h1>.Kolmas sõnum parameetritega &lt;span&gt;hello&lt;/span&gt; ja world.missing.string</div>';
   const englishWithSomeMissingStringsApp =
-    '<div><h1>Current language is englishWithSomeMissingStrings.</h1>First message.Second, but different message with param test.Third message with params hello and world.missing.string</div>';
+    '<div><h1>Current language is englishWithSomeMissingStrings.</h1>First message.Second, but different message with param <h1>test</h1>.Third message with params &lt;span&gt;hello&lt;/span&gt; and world.missing.string</div>';
   const fallbackLanguageApp =
-    '<div><h1>Current language is oops!.</h1>First message.Second message with param test.Third message with params hello and world.missing.string</div>';
+    '<div><h1>Current language is oops!.</h1>First message.Second message with param <h1>test</h1>.Third message with params &lt;span&gt;hello&lt;/span&gt; and world.missing.string</div>';
 
   function mountWithLanguage(language) {
     app = mount(<TestApp language={language} />);
