@@ -16,7 +16,7 @@ function gatherMatchesForKey(template, key) {
     const offset = match.index + match.length;
     const remainingTemplate = template.slice(offset);
     const childMatches = gatherMatchesForKey(remainingTemplate, key);
-    childMatches.forEach((childMatch) => {
+    childMatches.forEach(childMatch => {
       variablePositions.push({
         key,
         position: childMatch.position + offset,
@@ -56,14 +56,16 @@ class Provider extends Component {
     const { language, messages, fallbackLanguage } = this.props;
     if (messages[language] && messages[language][key]) {
       return renderTemplateIntoTemplateParts(messages[language][key], parameters);
-    } else if (messages[fallbackLanguage] && messages[fallbackLanguage][key]) {
+    }
+    if (messages[fallbackLanguage] && messages[fallbackLanguage][key]) {
       return renderTemplateIntoTemplateParts(messages[fallbackLanguage][key], parameters);
     }
     return [{ dangerous: false, value: key }];
   }
 
   render() {
-    return <ContextProvider value={this.getContext()}>{this.props.children}</ContextProvider>;
+    const { children } = this.props;
+    return <ContextProvider value={this.getContext()}>{children}</ContextProvider>;
   }
 }
 
@@ -74,6 +76,11 @@ Provider.propTypes = {
   fallbackLanguage: PropTypes.string.isRequired,
   messages: PropTypes.objectOf(PropTypes.objectOf(PropTypes.node)).isRequired,
   children: PropTypes.node,
+};
+
+Provider.defaultProps = {
+  language: '',
+  children: '',
 };
 
 export default Provider;
