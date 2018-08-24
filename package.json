@@ -58,6 +58,7 @@
   "scripts": {
     "precommit": "lint-staged",
     "test": "npm run lint && npm run check-format && jest --env=jsdom",
+    "coverage": "jest --env=jsdom --coverage",
     "test:watch": "jest --env=jsdom --watch",
     "lint": "eslint src",
     "check-format": "prettier-eslint \"src/**/*.js\" --list-different",
