@@ -20,10 +20,10 @@ retranslate is configured using the `Provider`. You pass `Provider` `messages`, 
 Example use:
 
 ```javascript
-import { Provider } from 'retranslate';
+import { Provider as TranslationProvider } from 'retranslate';
 
 const App = () => (
-  <Provider
+  <TranslationProvider
     messages={{
       en: { key: 'I am a translation in english with a parameter here: {{ parameter }}' },
       et: { key: 'Ma olen eestikeelne tõlge, parameetriga siin: {{ parameter }}' },
