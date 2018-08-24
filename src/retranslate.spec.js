@@ -6,7 +6,7 @@ import { Message, Provider, withTranslations } from '.';
 
 describe('retranslate', () => {
   const CustomThing = withTranslations(({ translations: { language, translate } }) => (
-    <h1>{translate('fourth', { language }).map(translation => translation.value)}</h1>
+    <h1>{translate('fourth', { language })}</h1>
   ));
 
   /* eslint-disable */

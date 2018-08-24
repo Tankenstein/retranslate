@@ -38,7 +38,7 @@ const App = () => (
 
 ### Message
 
-retranslate uses `Message` to actually translate your messages. It uses the children you give it as the key to use to get translations. You can render it as a string, when you want to use it for input placeholders or such, by setting the `asString` prop. You can make it not escape the html of the translation, by passing the key in a prop called `dangerouslyTranslateInnerHTML` rather than the children. To add variables, pass them as a map in the `params` prop. You can use react components as variables out of the box.
+retranslate uses `Message` to actually translate your messages. It uses the children you give it as the key to use to get translations. You can make it not escape the html of the translation, by passing the key in a prop called `dangerouslyTranslateInnerHTML` rather than the children. To add variables, pass them as a map in the `params` prop. You can use react components as variables out of the box.
 
 Example use:
 
@@ -54,7 +54,7 @@ When the translation is not found, even in the fallback language, the translatio
 ### withTranslations
 
 `withTranslations` is a higher order component that you can use to access translation functionality and language manually.
-You get access to both a `translate` function and the current language. The translate function takes a message key and template parameters, and returns an array of translation parts. These translation parts have both a value and a property called `dangerous`. If `dangerous` is true, it's a resolved template parameter and you should take special care with it (as these are dynamic).
+You get access to a `translate` function, a `translateAsParts` function and the current `language`. The translate function takes a message key and template parameters, and returns a string translation. When using this function, react components passed as parameters will not work, and they'll be stringified. The other function, translateAsParts, returns the internal representation of translation parts. These translation parts have both a value and a property called `dangerous`. If `dangerous` is true, it's a resolved template parameter and you should take special care with it (as these are dynamic).
 
 Example use:
 
@@ -62,9 +62,7 @@ Example use:
 import { withTranslations } from 'retranslate';
 
 const GreetingWithLanguage = withTranslations(({ translations: { translate, language } }) =>
-  translate('greeting', { name: 'someName', language /* parameters */ }).map(
-    translationPart => translationPart.value,
-  ),
+  translate('greeting', { name: 'someName', language /* parameters */ }),
 );
 ```
 
@@ -80,7 +78,7 @@ import { WithTranslations } from 'retranslate';
 const Greeting = ({ name }) => (
   <WithTranslations>
     {translations =>
-      translations.translate('greeting', { name }).map(translationPart => translationPart.value)
+      translations.translate('greeting', { name }))
     }
   </WithTranslations>
 );
