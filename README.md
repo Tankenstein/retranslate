@@ -54,6 +54,7 @@ When the translation is not found, even in the fallback language, the translatio
 ### withTranslations
 
 `withTranslations` is a higher order component that you can use to access translation functionality and language manually.
+You get access to both a `translate` function and the current language. The translate function takes a message key and template parameters, and returns an array of translation parts. These translation parts have both a value and a property called `dangerous`. If `dangerous` is true, it's a resolved template parameter and you should take special care with it (as these are dynamic).
 
 Example use:
 
@@ -61,9 +62,27 @@ Example use:
 import { withTranslations } from 'retranslate';
 
 const GreetingWithLanguage = withTranslations(({ translations: { translate, language } }) =>
-  translate('greeting', { name, language /* parameters */ }).map(
-    translationPart => translation.value,
+  translate('greeting', { name: 'someName', language /* parameters */ }).map(
+    translationPart => translationPart.value,
   ),
+);
+```
+
+### WithTranslations
+
+`WithTranslations` is a component, similar to the `withTranslations` HOC. Instead of exposing internal functionality as a hoc, it exposes it to a function as a child.
+
+Example use:
+
+```javascript
+import { WithTranslations } from 'retranslate';
+
+const Greeting = ({ name }) => (
+  <WithTranslations>
+    {translations =>
+      translations.translate('greeting', { name }).map(translationPart => translationPart.value)
+    }
+  </WithTranslations>
 );
 ```
 

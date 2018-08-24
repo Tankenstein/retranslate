@@ -22,7 +22,7 @@ describe('Message', () => {
     const context = { translations: { translate } };
     const component = render(<Message>message.id</Message>, context);
     expect(translate).toHaveBeenCalledTimes(1);
-    expect(translate).toHaveBeenCalledWith('message.id', undefined);
+    expect(translate).toHaveBeenCalledWith('message.id', {});
     expect(component.text()).toEqual('translated value');
   });
 
