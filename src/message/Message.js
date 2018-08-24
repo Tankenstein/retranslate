@@ -1,27 +1,23 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { Consumer as ContextConsumer } from '../common/context';
 
-const Message = ({ children, params, dangerouslyTranslateInnerHTML, asString }) => (
+const Message = ({ children, params, dangerouslyTranslateInnerHTML }) => (
   <ContextConsumer>
     {({ translations }) => {
-      if (asString) {
-        return translations
-          .translate(children, params)
-          .map(translation => translation.value)
-          .join('');
-      }
       if (!dangerouslyTranslateInnerHTML) {
-        return translations.translate(children, params).map(translation => translation.value);
+        return translations
+          .translateAsParts(children, params)
+          .map((translation, index) => <Fragment key={index}>{translation.value}</Fragment>);
       }
-      return translations.translate(dangerouslyTranslateInnerHTML, params).map(
-        translation =>
+      return translations.translateAsParts(dangerouslyTranslateInnerHTML, params).map(
+        (translation, index) =>
           !translation.dangerous ? (
             // eslint-disable-next-line react/no-danger
-            <span dangerouslySetInnerHTML={{ __html: translation.value }} />
+            <span key={index} dangerouslySetInnerHTML={{ __html: translation.value }} />
           ) : (
-            translation.value
+            <Fragment key={index}>{translation.value}</Fragment>
           ),
       );
     }}
@@ -33,13 +29,11 @@ Message.propTypes = {
   children: PropTypes.string,
   params: PropTypes.objectOf(PropTypes.node),
   dangerouslyTranslateInnerHTML: PropTypes.string,
-  asString: PropTypes.bool,
 };
 Message.defaultProps = {
   children: '',
   params: {},
   dangerouslyTranslateInnerHTML: '',
-  asString: false,
 };
 
 export default Message;

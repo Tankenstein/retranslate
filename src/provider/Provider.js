@@ -49,10 +49,16 @@ function renderTemplateIntoTemplateParts(template, params) {
 class Provider extends Component {
   getContext() {
     const { language } = this.props;
-    return { translations: { language, translate: this.translate.bind(this) } };
+    return {
+      translations: {
+        language,
+        translateAsParts: this.translateAsParts.bind(this),
+        translate: this.translate.bind(this),
+      },
+    };
   }
 
-  translate(key, parameters = {}) {
+  translateAsParts(key, parameters = {}) {
     const { language, messages, fallbackLanguage } = this.props;
     if (messages[language] && messages[language][key]) {
       return renderTemplateIntoTemplateParts(messages[language][key], parameters);
@@ -61,6 +67,12 @@ class Provider extends Component {
       return renderTemplateIntoTemplateParts(messages[fallbackLanguage][key], parameters);
     }
     return [{ dangerous: false, value: key }];
+  }
+
+  translate(key, parameters) {
+    return this.translateAsParts(key, parameters)
+      .map(({ value }) => value)
+      .join('');
   }
 
   render() {

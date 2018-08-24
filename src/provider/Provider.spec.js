@@ -12,6 +12,10 @@ describe('Translation Provider', () => {
   }
 
   function translate(key, params) {
+    return context.translations.translateAsParts(key, params);
+  }
+
+  function translateAsString(key, params) {
     return context.translations.translate(key, params);
   }
 
@@ -133,5 +137,12 @@ describe('Translation Provider', () => {
 
   it('has a display name', () => {
     expect(Provider.displayName).toEqual('TranslationProvider');
+  });
+
+  it('can translate as a string', () => {
+    props.messages = { language: { test: '{{ thing }} === {{ thing }}' } };
+    component.setProps(props);
+    getNewInstanceContext();
+    expect(translateAsString('test', { thing: 'hello' })).toBe('hello === hello');
   });
 });
