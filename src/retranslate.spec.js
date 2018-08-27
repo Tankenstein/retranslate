@@ -34,7 +34,7 @@ describe('retranslate', () => {
       <div>
         <Provider messages={messages} language={language} fallbackLanguage="en">
           <CustomThing />
-          <Message asString>first</Message>
+          <Message>first</Message>
           <Message params={{ first: <h1>test</h1> }}>second</Message>
           <Message params={{ second: '<span>hello</span>', third: 'world' }}>third</Message>
           <Message>missing.string</Message>
