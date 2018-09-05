@@ -9,7 +9,7 @@ function getDisplayName(WrappedComponent) {
 export default function withTranslations(WrappedComponent) {
   const WithTranslations = props => (
     <ContextConsumer>
-      {({ translations }) => {
+      {translations => {
         const wrappedProps = {
           // translations are passed first, so user can override.
           translations,

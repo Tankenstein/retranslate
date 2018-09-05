@@ -19,7 +19,7 @@ describe('Message', () => {
       { dangerous: false, value: 'translated ' },
       { dangerous: true, value: 'value' },
     ]);
-    const context = { translations: { translateAsParts } };
+    const context = { translateAsParts };
     const component = render(<Message>message.id</Message>, context);
     expect(translateAsParts).toHaveBeenCalledTimes(1);
     expect(translateAsParts).toHaveBeenCalledWith('message.id', {});
@@ -31,7 +31,7 @@ describe('Message', () => {
       { dangerous: false, value: 'translated value ' },
       { dangerous: true, value: params.test },
     ]);
-    const context = { translations: { translateAsParts } };
+    const context = { translateAsParts };
     const component = render(<Message params={{ test: 'hello' }}>message.id</Message>, context);
     expect(translateAsParts).toHaveBeenCalledTimes(1);
     expect(translateAsParts).toHaveBeenCalledWith('message.id', { test: 'hello' });
@@ -41,7 +41,7 @@ describe('Message', () => {
   it('translates with sanitized html', () => {
     const html = '<h1>this is a heading<b>with bold</b></h1>';
     const translateAsParts = jest.fn(() => [{ dangerous: false, value: html }]);
-    const context = { translations: { translateAsParts } };
+    const context = { translateAsParts };
     const component = render(<Message>message.id</Message>, context);
     expect(component.html()).toBe(
       '&lt;h1&gt;this is a heading&lt;b&gt;with bold&lt;/b&gt;&lt;/h1&gt;',
@@ -53,7 +53,7 @@ describe('Message', () => {
       { dangerous: false, value: '<h1>some safe html</h1>' },
       { dangerous: true, value: '<span>some sketchy user input</span>' },
     ]);
-    const context = { translations: { translateAsParts } };
+    const context = { translateAsParts };
     const component = render(<Message dangerouslyTranslateInnerHTML="message.id" />, context);
     expect(component.html()).toBe(
       '<span><h1>some safe html</h1></span>&lt;span&gt;some sketchy user input&lt;/span&gt;',
@@ -65,7 +65,7 @@ describe('Message', () => {
       { dangerous: false, value: 'just some ' },
       { dangerous: true, value: 'text' },
     ]);
-    const context = { translations: { translateAsParts } };
+    const context = { translateAsParts };
     const component = render(<Message asString>message.id</Message>, context);
     expect(component.html()).toBe('just some text');
   });

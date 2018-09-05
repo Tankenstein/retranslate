@@ -50,11 +50,9 @@ class Provider extends Component {
   getContext() {
     const { language } = this.props;
     return {
-      translations: {
-        language,
-        translateAsParts: this.translateAsParts.bind(this),
-        translate: this.translate.bind(this),
-      },
+      language,
+      translateAsParts: this.translateAsParts.bind(this),
+      translate: this.translate.bind(this),
     };
   }
 
