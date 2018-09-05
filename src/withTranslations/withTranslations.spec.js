@@ -21,10 +21,8 @@ describe('withTranslations higher order component', () => {
 
   beforeEach(() => {
     testContext = {
-      translations: {
-        language: 'language',
-        translate: jest.fn(),
-      },
+      language: 'language',
+      translate: jest.fn(),
     };
     TestComponent = () => <span>Test</span>;
     mountTree();
@@ -36,7 +34,7 @@ describe('withTranslations higher order component', () => {
   });
 
   it('passes translations from context to props', () => {
-    const { language, translate } = testContext.translations;
+    const { language, translate } = testContext;
     const getTranslationsProp = () => mountedTree.find(TestComponent).prop('translations');
 
     expect(getTranslationsProp().language).toEqual(language);

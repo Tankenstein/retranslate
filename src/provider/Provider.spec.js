@@ -12,11 +12,11 @@ describe('Translation Provider', () => {
   }
 
   function translate(key, params) {
-    return context.translations.translateAsParts(key, params);
+    return context.translateAsParts(key, params);
   }
 
   function translateAsString(key, params) {
-    return context.translations.translate(key, params);
+    return context.translate(key, params);
   }
 
   beforeEach(() => {
@@ -41,14 +41,14 @@ describe('Translation Provider', () => {
     };
     component.setProps(props);
     getNewInstanceContext();
-    expect(context.translations.language).toEqual('firstLanguage');
+    expect(context.language).toEqual('firstLanguage');
     expect(translate('one')).toEqual([{ dangerous: false, value: 'firstLanguageOne' }]);
     expect(translate('two')).toEqual([{ dangerous: false, value: 'firstLanguageTwo' }]);
 
     props.language = 'secondLanguage';
     component.setProps(props);
     getNewInstanceContext();
-    expect(context.translations.language).toEqual('secondLanguage');
+    expect(context.language).toEqual('secondLanguage');
     expect(translate('one')).toEqual([{ dangerous: false, value: 'secondLanguageOne' }]);
     expect(translate('two')).toEqual([{ dangerous: false, value: 'secondLanguageTwo' }]);
   });
@@ -60,7 +60,7 @@ describe('Translation Provider', () => {
     component.setProps(props);
     getNewInstanceContext();
     expect(translate('message')).toEqual([{ dangerous: false, value: 'hey' }]);
-    expect(context.translations.language).toEqual('firstLanguage');
+    expect(context.language).toEqual('firstLanguage');
   });
 
   it('interpolates variables', () => {

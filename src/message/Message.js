@@ -5,7 +5,7 @@ import { Consumer as ContextConsumer } from '../common/context';
 
 const Message = ({ children, params, dangerouslyTranslateInnerHTML }) => (
   <ContextConsumer>
-    {({ translations }) => {
+    {translations => {
       if (!dangerouslyTranslateInnerHTML) {
         return translations
           .translateAsParts(children, params)
