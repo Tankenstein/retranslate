@@ -5,7 +5,8 @@ module.exports = {
     filename: 'retranslate.js',
     library: 'retranslate',
     libraryTarget: 'umd',
-    globalObject: 'this',
+    umdNamedDefine: true,
+    globalObject: "typeof self !== 'undefined' ? self : this",
   },
   module: {
     rules: [
@@ -17,6 +18,11 @@ module.exports = {
     ],
   },
   externals: {
-    react: 'react',
+    react: {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react',
+    },
   },
 };
