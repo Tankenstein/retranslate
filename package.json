@@ -2,7 +2,7 @@
   "name": "retranslate",
   "description": "Real simple translations for react.",
   "main": "dist/retranslate.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/tankenstein/retranslate/issues",
