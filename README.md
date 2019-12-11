@@ -84,6 +84,21 @@ const Greeting = ({ name }) => (
 );
 ```
 
+### useTranslations
+
+`useTranslations` is a [React Hook](https://reactjs.org/docs/hooks-intro.html) based on `useContext`, allowing access to translations without component nesting.
+
+Example use:
+
+```javascript
+import { useTranslations } from 'retranslate';
+
+const Greeting = ({ name }) => {
+  const { translate, language } = useTranslations();
+  return <div>{translate('greeting', { name: 'someName', language /* parameters */ })}</div>;
+};
+```
+
 ## Potential questions
 
 - Async loading
