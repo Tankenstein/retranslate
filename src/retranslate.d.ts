@@ -1,10 +1,10 @@
 import { ReactNode, FC, ComponentType } from 'react';
 
-type Parameters = Record<string, ReactNode>;
+export type Parameters = Record<string, ReactNode>;
 
-type Translate = (key: string, parameters?: Parameters) => string;
+export type Translate = (key: string, parameters?: Parameters) => string;
 
-type TranslateAsParts = (
+export type TranslateAsParts = (
   key: string,
   parameters?: Parameters,
 ) => [{ dangerous: boolean; value: string }];
