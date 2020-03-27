@@ -17,10 +17,12 @@ Then, start importing and using the following components and functions:
 
 retranslate is configured using the `Provider`. You pass `Provider` `messages`, a `language` and a `fallbackLanguage` (just in case). Wrap your application with `Provider` to make retranslate work. The `Provider` takes an optional argument `wrapperElement`, which can be used to configure which element is used to render the provider.
 
+Also available as `TranslationProvider`.
+
 Example use:
 
 ```javascript
-import { Provider as TranslationProvider } from 'retranslate';
+import { TranslationProvider } from 'retranslate';
 
 const App = () => (
   <TranslationProvider
@@ -32,7 +34,7 @@ const App = () => (
     fallbackLanguage="en"
   >
     // ... your app goes here
-  </Provider>
+  </TranslationProvider>
 );
 ```
 

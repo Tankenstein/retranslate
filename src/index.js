@@ -6,6 +6,7 @@ import withTranslationsModule from './withTranslations';
 
 export const Message = MessageModule;
 export const Provider = ProviderModule;
+export const TranslationProvider = ProviderModule;
 export const useTranslations = useTranslationsModule;
 export const withTranslations = withTranslationsModule;
 export const WithTranslations = WithTranslationsComponentModule;

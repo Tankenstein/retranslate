@@ -1,3 +1,5 @@
+const CopyPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
@@ -25,4 +27,5 @@ module.exports = {
       amd: 'react',
     },
   },
+  plugins: [new CopyPlugin([{ from: 'src/retranslate.d.ts', to: './' }])],
 };
