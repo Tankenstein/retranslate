@@ -2,33 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Provider as ContextProvider } from '../common/context';
-import { renderTemplateParts } from '../core/renderTemplateParts';
+import { translate, translateAsParts } from '../core';
 
 class Provider extends Component {
   getContext() {
-    const { language } = this.props;
+    const { language, messages, fallbackLanguage } = this.props;
+    const config = { language, messages, fallbackLanguage };
+
     return {
       language,
-      translateAsParts: this.translateAsParts.bind(this),
-      translate: this.translate.bind(this),
+      translateAsParts: translateAsParts(config),
+      translate: translate(config),
     };
-  }
-
-  translateAsParts(key, parameters = {}) {
-    const { language, messages, fallbackLanguage } = this.props;
-    if (messages[language] && messages[language][key]) {
-      return renderTemplateParts(messages[language][key], parameters);
-    }
-    if (messages[fallbackLanguage] && messages[fallbackLanguage][key]) {
-      return renderTemplateParts(messages[fallbackLanguage][key], parameters);
-    }
-    return [{ dangerous: false, value: key }];
-  }
-
-  translate(key, parameters) {
-    return this.translateAsParts(key, parameters)
-      .map(({ value }) => value)
-      .join('');
   }
 
   render() {
