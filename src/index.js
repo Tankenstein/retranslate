@@ -4,6 +4,8 @@ import { Consumer as WithTranslationsComponentModule } from './common/context';
 import useTranslationsModule from './useTranslations';
 import withTranslationsModule from './withTranslations';
 
+export { translate as translateWith } from './core/translate';
+
 export const Message = MessageModule;
 export const Provider = ProviderModule;
 export const TranslationProvider = ProviderModule;

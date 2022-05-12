@@ -15,12 +15,14 @@ export interface Translations {
   language: string;
 }
 
-export interface ProviderProps {
-  children?: ReactNode;
+export type Messages = Record<string, Record<string, string>>
+export type Config = {
   language?: string;
   fallbackLanguage: string;
-  messages: Record<string, Record<string, string>>;
+  messages: Messages;
 }
+
+export type ProviderProps =  { children?: ReactNode; } & Config;
 export const Provider: FC<ProviderProps>;
 export const TranslationProvider: FC<ProviderProps>;
 
@@ -41,3 +43,5 @@ declare function withTranslations<P extends WithTranslationProps>(
 ): ReactNode;
 
 export const WithTranslations: FC<{ children: (translations: Translations) => ReactNode }>;
+
+declare function translateWith(config: Config): Translate;
