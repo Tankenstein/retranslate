@@ -3,30 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Provider as ContextProvider } from '../common/context';
 
-function gatherMatchesForKey(template, key) {
-  const variablePositions = [];
-  const variablePattern = new RegExp(`{{\\s*${key}\\s*}}`);
-  const match = template.match(variablePattern);
-  if (match) {
-    variablePositions.push({
-      key,
-      position: match.index,
-      length: match[0].length,
-    });
-    const offset = match.index + match.length;
-    const remainingTemplate = template.slice(offset);
-    const childMatches = gatherMatchesForKey(remainingTemplate, key);
-    childMatches.forEach(childMatch => {
-      variablePositions.push({
-        key,
-        position: childMatch.position + offset,
-        length: childMatch.length,
-      });
-    });
-  }
-  return variablePositions;
-}
-
 function renderTemplateIntoTemplateParts(template, params) {
   const variablePositions = Object.keys(params)
     .map(key => gatherMatchesForKey(template, key))
