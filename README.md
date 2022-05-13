@@ -101,6 +101,24 @@ const Greeting = ({ name }) => {
 };
 ```
 
+### translateWith
+
+`translateWith` is a factory function that returns the translate function, allowing access to translations out of React.
+
+Example use:
+
+```javascript
+import { translateWith } from 'retranslate';
+
+const messages = {
+  en: { key: 'I am a translation in english with a parameter here: {{ parameter }}' },
+  et: { key: 'Ma olen eestikeelne tõlge, parameetriga siin: {{ parameter }}' },
+}
+
+const translate = translateWith({ messgaes, language: 'et', fallbackLanguage: 'en' })
+const translatedMessage = translate('key', { parameter: 'foo' })
+```
+
 ## Potential questions
 
 - Async loading
